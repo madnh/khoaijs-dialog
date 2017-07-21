@@ -168,7 +168,8 @@
         return this.options.content;
     };
     Dialog.prototype.updateContent = function (new_content) {
-        this.options.content = new_content;
+        this.options.content = new_content || this.options.content;
+        new_content = this.getContent();
 
         if (this.isOpened()) {
             this.emitEvent('update_content', new_content);
