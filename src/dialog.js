@@ -403,7 +403,7 @@
         }
 
         this.buttons[button.options.name] = button;
-        button.listen(this);
+        button.listen(this, 'dialog');
 
         return button;
     };
