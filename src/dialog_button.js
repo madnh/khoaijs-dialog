@@ -83,18 +83,13 @@
     }
 
     function _btn_event_dialog_toggle_enable(notice_data) {
-        this.toggleEnable(notice_data.data);
+        this.toggleEnable(notice_data);
     }
 
     function _btn_event_dialog_toggle_pending(notice_data) {
-        if (notice_data.data) {
-            if (this.options.disable_on_pending) {
-                this.toggleEnable(false);
-            }
-        } else {
-            this.toggleEnable(true);
+        if (this.options.disable_on_pending) {
+            this.toggleEnable(!notice_data);
         }
-
     }
 
     function DialogButton(option) {
