@@ -82,7 +82,7 @@
                 update_content_cb(options.error_content || 'Get dynamic content failed');
             });
 
-            aw.option('before_send', function () {
+            aw.option('beforeSend', function () {
                 dialog.emitEvent('load_content');
                 dialog.pending();
 
