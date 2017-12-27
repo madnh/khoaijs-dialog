@@ -1,6 +1,6 @@
 {
   "name": "khoaijs-dialog",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "dialog.js",
   "directories": {
@@ -31,5 +31,16 @@
     "mocha": "^3.0.2",
     "chai": "^3.5.0",
     "expect.js": "^0.3.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "khoaijs": "0.0.1",
+    "khoaijs-ajax": "0.0.1",
+    "khoaijs-event-emitter": "0.0.2",
+    "khoaijs-pre-options": "0.0.1",
+    "khoaijs-template": "0.0.2",
+    "khoaijs-waiter": "0.0.1",
+    "lodash": "^4.17.4"
   }
 }

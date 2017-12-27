@@ -33,7 +33,7 @@
         root.Dialog = module;
     }
 }(this, function (_, jQuery, Khoai, EventEmitter, PreOptions, Template, DialogButton) {
-    var version = '0.0.1';
+    var version = '0.0.6';
     var constant = {
         PRE_OPTIONS_NAME: 'Khoai.Dialog',
         TEMPLATE_TYPE: 'Dialog',

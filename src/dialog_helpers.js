@@ -379,7 +379,8 @@
         submit_button_name: 'submit',
         cancel_button_name: 'cancel',
         buttons: [],
-        buttons_extend_options: {}
+        buttons_extend_options: {},
+        disableable: false
     });
     /**
      *
@@ -394,9 +395,10 @@
         if (!_.isFunction(callback)) {
             callback = _.noop;
         }
-        options = _.extend(PreOptions.get(Dialog.DIALOG_FORM_PRE_OPTIONS_NAME, options), {
+        options = PreOptions.get(Dialog.DIALOG_FORM_PRE_OPTIONS_NAME, options);
+        options = _.extend(options, {
             content: content,
-            content_handler: dialogFormContentHandler
+            content_handler: dialogFormContentHandler(options)
         });
 
         if (_.isEmpty(options.buttons)) {
@@ -412,7 +414,7 @@
 
         dialog.option(
             _.omit(options, ['form_classes', 'message_classes', 'validator', 'submit_button_name',
-                'cancel_button_name', 'buttons', 'buttons_extend_options'])
+                'cancel_button_name', 'buttons', 'buttons_extend_options', 'disableable'])
         );
 
         _.each(options.buttons, function (button) {
@@ -470,8 +472,21 @@
         }
     }
 
-    function dialogFormContentHandler(content) {
-        return ['<form><div class="dialog_form_message"></div>', content, '<input type="submit" style="display: none;"/></form>'].join('');
+    function dialogFormContentHandler(options) {
+        var wrap_begin = ['<form>'];
+        var wrap_end = ['</form>'];
+
+        if (options.disableable) {
+            wrap_begin.push('<fieldset class="form_fieldset">');
+            wrap_end.unshift('</fieldset>');
+        }
+
+        wrap_begin.push('<div class="dialog_form_message"></div>');
+        wrap_end.unshift('<input type="submit" style="display: none;"/>');
+
+        return function (content) {
+            return wrap_begin.join("\n") + content + wrap_end.join("\n");
+        };
     }
 
     function classesToSelector(classes) {
@@ -565,6 +580,14 @@
         dialog.on('closed', function () {
             jQuery('body').off('submit', this.data['form_selector'], form_submit_event_listener);
         });
+
+        if(options.disableable){
+            dialog.on('toggle_enable', function(){
+                var form = this.getFormDOM();
+
+                form.find('fieldset.form_fieldset').prop('disabled', !this.isEnable())
+            })
+        }
     }
 
 
@@ -589,6 +612,7 @@
         placeholder: '',
         input_type: 'text',
         input_classes: 'form-control',
+        close_on_submit: true,
         buttons_extend_options: {
             submit: {
                 label: 'Ok'
@@ -601,7 +625,7 @@
 
         if (!_.isObject(options)) {
             options = {
-                title: options + ''
+                title: options ? options + '' : 'Prompt'
             };
         }
         if (!_.isFunction(callback)) {
@@ -619,7 +643,7 @@
 
         function prompt_cb(btn_name, form, btn) {
             if (!form) {
-                callback(false);
+                callback(false, form, btn);
                 return;
             }
 
@@ -627,13 +651,16 @@
 
             if ('submit' === btn_name) {
                 value = form.find('input[name="prompt_data"]').val();
-                btn.closeDialog();
+
+                if (options.close_on_submit) {
+                    btn.closeDialog();
+                }
             }
 
-            callback(value);
+            callback(value, form, btn);
         }
 
-        dialog = Dialog.form(content.join(''), prompt_cb, _.omit(options, 'default_value', 'placeholder', 'input_type', 'input_classes'));
+        dialog = Dialog.form(content.join(''), prompt_cb, _.omit(options, 'default_value', 'placeholder', 'input_type', 'input_classes', 'close_on_submit'));
 
         return dialog;
     };
