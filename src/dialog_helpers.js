@@ -643,7 +643,7 @@
 
         function prompt_cb(btn_name, form, btn) {
             if (!form) {
-                callback(false, form, btn);
+                callback.apply(this, [false, form, btn]);
                 return;
             }
 
@@ -657,7 +657,7 @@
                 }
             }
 
-            callback(value, form, btn);
+            callback.apply(this, [value, form, btn]);
         }
 
         dialog = Dialog.form(content.join(''), prompt_cb, _.omit(options, 'default_value', 'placeholder', 'input_type', 'input_classes', 'close_on_submit'));

@@ -6,14 +6,13 @@
             'khoaijs-pre-options',
             'khoaijs-template',
             'khoaijs-waiter',
-            '../dialog_button',
-            '../dialog'
+            '../dialog_button'
         ];
         require(dependencies, factory);
     } else {
-        factory(root._, root.Khoai, root.PreOptions, root.Template, root.Waiter, root.DialogButton, root.Dialog);
+        factory(root._, root.Khoai, root.PreOptions, root.Template, root.Waiter, root.DialogButton);
     }
-}(this, function (_, Khoai, PreOptions, Template, Waiter, DialogButton, Dialog) {
+}(this, function (_, Khoai, PreOptions, Template, Waiter, DialogButton) {
     var version = '0.0.1';
 
     Khoai.util.defineConstant(DialogButton, {

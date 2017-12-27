@@ -7,7 +7,6 @@
             'khoaijs-pre-options',
             'khoaijs-template',
             'khoaijs-waiter',
-            '../dialog_button',
             '../dialog'
         ];
         require(dependencies, factory);
@@ -19,18 +18,16 @@
             (root.Khoai && root.Khoai.PreOptions) || root.PreOptions,
             (root.Khoai && root.Khoai.Template) || root.Template,
             (root.Khoai && root.Khoai.Waiter) || root.Waiter,
-            (root.Khoai && root.Khoai.Ajax) || root.Ajax,
-            (root.Khoai && root.Khoai.DialogButton) || root.DialogButton,
             (root.Khoai && root.Khoai.Dialog) || root.Dialog
         );
     }
-}(this, function (_, jQuery, Khoai, PreOptions, Template, Waiter, Ajax, DialogButton, Dialog) {
+}(this, function (_, jQuery, Khoai, PreOptions, Template, Waiter, Dialog) {
     var version = '0.0.1';
 
-    Khoai.util.defineConstant(DialogButton, {
+    Khoai.util.defineConstant(Dialog, {
         TEMPLATE_BOOTSTRAP_PRE_OPTIONS_NAME: 'Khoai.Dialog.Template.Bootstrap'
     });
-    PreOptions.define(DialogButton.TEMPLATE_BOOTSTRAP_PRE_OPTIONS_NAME, {
+    PreOptions.define(Dialog.TEMPLATE_BOOTSTRAP_PRE_OPTIONS_NAME, {
         has_header: true,
         has_footer: true,
         close_manual: true,
@@ -181,7 +178,7 @@
 
         Template.call(this);
 
-        this.options = PreOptions.get(DialogButton.TEMPLATE_BOOTSTRAP_PRE_OPTIONS_NAME);
+        this.options = PreOptions.get(Dialog.TEMPLATE_BOOTSTRAP_PRE_OPTIONS_NAME);
 
         this.waiter_keys = [];
         this.setLayout(_layout);
@@ -263,14 +260,13 @@
             'khoaijs-pre-options',
             'khoaijs-template',
             'khoaijs-waiter',
-            '../dialog_button',
-            '../dialog'
+            '../dialog_button'
         ];
         require(dependencies, factory);
     } else {
-        factory(root._, root.Khoai, root.PreOptions, root.Template, root.Waiter, root.DialogButton, root.Dialog);
+        factory(root._, root.Khoai, root.PreOptions, root.Template, root.Waiter, root.DialogButton);
     }
-}(this, function (_, Khoai, PreOptions, Template, Waiter, DialogButton, Dialog) {
+}(this, function (_, Khoai, PreOptions, Template, Waiter, DialogButton) {
     var version = '0.0.1';
 
     Khoai.util.defineConstant(DialogButton, {
